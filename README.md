@@ -13,5 +13,5 @@
 
 ### :deciduous_tree: Sobre :deciduous_tree:
 Parte da trilha de cursos de java API da [alura](https://cursos.alura.com.br)
-[link](https://cursos.alura.com.br/course/introducao-design-patterns-java)
+[link](https://cursos.alura.com.br/course/spring-boot-api-rest)
 
