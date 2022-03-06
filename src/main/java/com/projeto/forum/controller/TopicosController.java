@@ -17,32 +17,38 @@ import java.util.List;
 @RestController
 @RequestMapping("/topicos")
 public class TopicosController {
+	
+	@Autowired
+	private TopicoRepository topicoRepository;
+	
+	@Autowired
+	private CursoRepository cursoRepository;
+	
+	@GetMapping
+	public List<TopicoDTO> lista(String nomeCurso) {
+		if (nomeCurso == null) {
+			List<Topico> topicos = topicoRepository.findAll();
+			return TopicoDTO.converter(topicos);
+		} else {
+			List<Topico> topicos = topicoRepository.findByCursoNome(nomeCurso);
+			return TopicoDTO.converter(topicos);
+		}
+	}
+	
+	@PostMapping
+	public ResponseEntity<TopicoDTO> cadastrar(@RequestBody @Valid TopicoForm form, UriComponentsBuilder uriBuilder) {
+		Topico topico = form.converter(cursoRepository);
+		topicoRepository.save(topico);
+		
+		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
+		return ResponseEntity.created(uri).body(new TopicoDTO(topico));
+	}
 
-    @Autowired
-    TopicoRepository repository;
-
-    @Autowired
-    CursoRepository cursoRepository;
-
-    @GetMapping
-    public List<TopicoDTO> lista(String nomeCurso) {
-        if(nomeCurso == null) {
-            List<Topico> topicos = repository.findAll();
-            return TopicoDTO.converter(topicos);
-        } else {
-            List<Topico> topicos = repository.findByCursoNome(nomeCurso);
-            return TopicoDTO.converter(topicos);
-        }
-
-    }
-    @PostMapping
-    public ResponseEntity<TopicoDTO> cadastrar(@RequestBody @Valid TopicoForm form, UriComponentsBuilder uriBuilder) {
-        Topico topico = form.converter(cursoRepository);
-        repository.save(topico);
-
-        URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(new TopicoDTO(topico));
-    }
 }
+
+
+
+
+
+
 
