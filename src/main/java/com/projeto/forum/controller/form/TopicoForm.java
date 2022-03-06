@@ -8,8 +8,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Length;
-
 public class TopicoForm {
 
     @NotNull @NotEmpty @Size(min = 5)

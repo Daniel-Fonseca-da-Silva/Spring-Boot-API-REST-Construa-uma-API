@@ -30,7 +30,7 @@ public class TopicosController {
             List<Topico> topicos = repository.findAll();
             return TopicoDTO.converter(topicos);
         } else {
-            List<Topico> topicos = repository.findByCurso_Nome(nomeCurso);
+            List<Topico> topicos = repository.findByCursoNome(nomeCurso);
             return TopicoDTO.converter(topicos);
         }
 
